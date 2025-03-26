@@ -7,7 +7,7 @@ const BadgeCard = () => {
   const [JobData, SetJobData] = useState<any[]>([]);
 
   const GetJobs = async () => {
-    return await axios.get("http://127.0.0.1:8000/job/jobs")
+    return await axios.get("https://jobmanagement-task.onrender.com/job/jobs")
   }
   async function fetchData() {
     const res = await GetJobs()

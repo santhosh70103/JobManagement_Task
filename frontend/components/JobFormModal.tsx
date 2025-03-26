@@ -32,7 +32,7 @@ export default function JobFormModal({ isOpen, closeModal }: { isOpen: boolean; 
         };
 
         try {
-            const response = await axios.post("http://127.0.0.1:8000/job/create", requestData);
+            const response = await axios.post("https://jobmanagement-task.onrender.com/job/create", requestData);
             console.log("Job Created Successfully:", response.data);
             toast.success("🎉 Job Created Successfully!", { position: "top-right", autoClose: 3000 });
             reset(); // Clear form after successful submission
