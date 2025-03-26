@@ -6,7 +6,7 @@ import Main from "@/components/Main";
 export default function Home() {
 
   return (
-    <div>
+    <div className="bg-[#fbfaff]">
       <Header/>
       <Main/>
     </div>

@@ -1,7 +1,7 @@
 
 import { Autocomplete, Group, RangeSlider } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Menu, UnstyledButton } from '@mantine/core';
 import { IconChevronDown } from '@tabler/icons-react';
 import classes from "@/css/filterdropdown.module.css";
@@ -11,13 +11,16 @@ import Loadable from 'next/dist/shared/lib/loadable.shared-runtime';
 import JobTypeImg from '@/public/Vector.png'
 import RangeClass from '@/css/SliderLabel.module.css';
 import LineSpace from '@/public/LineSpace.png'
+import { FilterType } from '@/types/types'; 
+
 
 type DropdownType = {
     label: string
 }
 
-export default function FilterSection() {
+export default function FilterSection({setFilters}:{setFilters: Dispatch<SetStateAction<FilterType>>}) {
     const Locationdata = [
+        { label: 'All' },
         { label: 'Chennai' },
         { label: 'delhi' },
         { label: 'Banglore' },
@@ -25,11 +28,13 @@ export default function FilterSection() {
         { label: 'Remote' },
     ];
     const JobtypeData=[
+        { label: 'All' },
         { label: 'Internship' },
         { label: 'FullTime' },
         { label: 'PartTime' },
         { label: 'Contract' },
     ]
+
     return (
        <div className=''>
          <Group className=' ml-22 flex space-x-10 justify-center  '>
@@ -38,11 +43,11 @@ export default function FilterSection() {
             </Group>
              <Image src={LineSpace} alt='line'/>
             <Group>
-                <DropDown data={Locationdata} image={Location}  />
+                <DropDown filterType="jobType" data={Locationdata} image={Location} setFilters={setFilters}/>
             </Group>
             <Image src={LineSpace} alt='line'/>
             <Group>
-                <DropDown data={JobtypeData} image={JobTypeImg}/> 
+                <DropDown filterType="location" data={JobtypeData} image={JobTypeImg} setFilters={setFilters}/> 
             </Group>
             <Image src={LineSpace} alt='line'/>
             <Group className='w-96'>
@@ -76,12 +81,18 @@ function SearchBar() {
     )
 }
 
-function DropDown({ data, image }: { data: DropdownType[], image: StaticImageData }) {
+function DropDown({ filterType, data, image, setFilters }: { filterType: string, data: DropdownType[], image: StaticImageData, setFilters: Dispatch<SetStateAction<FilterType>> }) {
     const [opened, setOpened] = useState<boolean>(false);
-    const [selected, setSelected] = useState<DropdownType | null>(null);
+    const [selected, setSelected] = useState<DropdownType>({ label:"All" });
     const items = data.map((item) => (
         <Menu.Item
-            onClick={() => setSelected(item)}
+            onClick={() => {
+                setSelected(item);
+                setFilters((prev)=>({
+                    ...prev,
+                    [filterType]: item.label
+                }))
+            }}
             key={item.label}
         >
             {item.label}
@@ -95,13 +106,12 @@ function DropDown({ data, image }: { data: DropdownType[], image: StaticImageDat
             radius="md"
             width="target"
             withinPortal
-            
         >
             <Menu.Target>
                 <UnstyledButton className={classes.control} data-expanded={opened || undefined}>
                     <Group gap="xs">
                         <Image src={image} alt='location icon' />
-                        <span className={classes.label}>{selected ? selected.label :""}</span>
+                        <span className={classes.label}>{selected.label}</span>
                     </Group>
                     <IconChevronDown size={16} className={classes.icon} stroke={1.5} />
                 </UnstyledButton>

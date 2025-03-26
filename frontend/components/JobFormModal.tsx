@@ -45,26 +45,28 @@ export default function JobFormModal({ isOpen, closeModal }: { isOpen: boolean; 
 
     return (
         <div className="fixed inset-0 flex justify-center backdrop-blur-sm items-center">
-            <div className="w-[600px] p-6 rounded-lg shadow-lg relative bg-white border">
+            <div className="w-[700px] h-[550px] p-6 rounded-lg shadow-lg relative bg-white border">
                 {/* Close Button */}
-                <button className="absolute top-3 right-3 text-gray-700" onClick={closeModal}>
+               <div className="">
+               <button className="absolute top-3 right-3 text-gray-700" onClick={closeModal}>
                     ✖
                 </button>
 
-                <h2 className="text-xl font-semibold text-center mb-4 text-gray-900">Create Job Opening</h2>
+                <h2 className="text-xl font-semibold text-center mb-4 text-gray-900">Create Job Opening</h2> 
+               </div>
 
                 {/* Form Fields */}
-                <form onSubmit={handleSubmit(onSubmit)} className="text-gray-800">
-                    <div className="flex space-x-10">
+                <form onSubmit={handleSubmit(onSubmit)} className="text-gray-800 ">
+                    <div className="flex justify-between">
                         <div className="flex flex-col">
                             <label className="block text-sm font-medium">Job Title</label>
-                            <input {...register("jobTitle", { required: "Job title is required" })} type="text" className="w-full p-2 border rounded-md mb-4 bg-white/40 border-gray-300" placeholder="Enter job title" />
+                            <input {...register("jobTitle", { required: "Job title is required" })} type="text" className="w-full p-2 pr-[75px] border rounded-md mb-4 bg-white/40 border-gray-300" placeholder="Enter job title" />
                             {errors.jobTitle && <span className="text-red-500 text-sm">{errors.jobTitle.message}</span>}
                         </div>
 
                         <div className="flex flex-col">
                             <label className="block text-sm font-medium">Company Name</label>
-                            <input {...register("companyName", { required: "Company name is required" })} type="text" className="w-full p-2 border rounded-md mb-4 bg-white/40 border-gray-300" placeholder="Enter company name" />
+                            <input {...register("companyName", { required: "Company name is required" })} type="text" className="w-full p-2 pr-[75px] border rounded-md mb-4 bg-white/40 border-gray-300" placeholder="Enter company name" />
                             {errors.companyName && <span className="text-red-500 text-sm">{errors.companyName.message}</span>}
                         </div>
                     </div>
