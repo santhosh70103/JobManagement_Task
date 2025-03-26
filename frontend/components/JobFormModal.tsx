@@ -15,7 +15,9 @@ type JobFormData = {
 
 export default function JobFormModal({ isOpen, closeModal }: { isOpen: boolean; closeModal: () => void }) {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<JobFormData>();
-
+    
+    const end_point_url = process.env.NEXT_PUBLIC_HOST
+    
     if (!isOpen) return null; // Hide modal if not open
 
     const onSubmit = async (data: JobFormData) => {
@@ -32,8 +34,7 @@ export default function JobFormModal({ isOpen, closeModal }: { isOpen: boolean; 
         };
 
         try {
-            const response = await axios.post("https://jobmanagement-task.onrender.com/job/create", requestData);
-            console.log("Job Created Successfully:", response.data);
+            const response = await axios.post(`${end_point_url}/job/create`, requestData);
             toast.success("🎉 Job Created Successfully!", { position: "top-right", autoClose: 3000 });
             reset(); // Clear form after successful submission
             closeModal(); // Close modal
@@ -96,7 +97,7 @@ export default function JobFormModal({ isOpen, closeModal }: { isOpen: boolean; 
                     </div>
 
                     <div className="mb-3 flex space-x-10">
-                        <div className="flex flex-col">
+                        <div className="flex flex-col pr-5">
                             <label htmlFor="Salary">Salary Range</label>
                             <div className="flex space-x-2">
                                 <input {...register("salaryMin", { required: "Minimum salary is required", valueAsNumber: true })} type="number" placeholder="₹ 0" className="w-[120px] p-2 border border-gray-200 rounded-sm" />
@@ -105,9 +106,9 @@ export default function JobFormModal({ isOpen, closeModal }: { isOpen: boolean; 
                             {errors.salaryMin && <span className="text-red-500 text-sm">{errors.salaryMin.message}</span>}
                             {errors.salaryMax && <span className="text-red-500 text-sm">{errors.salaryMax.message}</span>}
                         </div>
-                        <div>
+                        <div className="flex flex-col">
                             <label>Application Deadline</label>
-                            <input {...register("applicationDeadline", { required: "Deadline is required" })} type="date" className="p-2 border border-gray-200 rounded-sm" />
+                            <input {...register("applicationDeadline", { required: "Deadline is required" })} type="date" className="p-2 pl-[150px] border border-gray-200 rounded-sm" />
                             {errors.applicationDeadline && <span className="text-red-500 text-sm">{errors.applicationDeadline.message}</span>}
                         </div>
                     </div>

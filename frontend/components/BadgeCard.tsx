@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 const BadgeCard = () => {
 
   const [JobData, SetJobData] = useState<any[]>([]);
-
+  const end_point_url = process.env.NEXT_PUBLIC_HOST;
   const GetJobs = async () => {
-    return await axios.get("https://jobmanagement-task.onrender.com/job/jobs")
+    return await axios.get(`${end_point_url}/job/jobs`)
   }
   async function fetchData() {
     const res = await GetJobs()
@@ -18,9 +18,7 @@ const BadgeCard = () => {
   useEffect(() => {
     fetchData()
   }, [])
-  console.log(JobData)
-
-  console.log(JobData)
+ 
   return (
     <div className="flex flex-wrap gap-5 justify-around pt-28">
 
