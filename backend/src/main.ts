@@ -7,7 +7,7 @@ async function bootstrap() {
 
 
   app.enableCors({
-    origin: 'http://localhost:3000', // Change this to your frontend URL
+    origin: 'https://job-management-task-1ymmxhwlh-santhoshs-projects-d8275fc3.vercel.app/', // Change this to your frontend URL
     methods: 'GET,POST,PUT,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
   });
